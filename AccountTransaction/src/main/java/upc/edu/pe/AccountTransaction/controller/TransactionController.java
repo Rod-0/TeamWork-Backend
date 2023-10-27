@@ -66,7 +66,7 @@ public class TransactionController {
 
     private void validation(Transaction transaction) {
         if (transaction.getType() == null || transaction.getType().isEmpty()) {
-            throw new ValidationException("Type is required");
+            throw new ValidationException("El tipo de transacción bancaria debe ser obligatorio");
         }
         if (transaction.getAmount() <= 0.0){
             throw new ValidationException("El monto en una transacción bancaria debe ser mayor de S/.0.0");
