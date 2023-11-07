@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import upc.edu.pe.AccountTransaction.dto.AccountDto;
+import upc.edu.pe.AccountTransaction.dto.request.AccountRequestDto;
+import upc.edu.pe.AccountTransaction.dto.response.AccountResponseDto;
 import upc.edu.pe.AccountTransaction.exception.ValidationException;
 import upc.edu.pe.AccountTransaction.model.Account;
 import upc.edu.pe.AccountTransaction.repository.AccountRepository;
@@ -72,10 +74,10 @@ public class AccountController {
             schema = @Schema(implementation = Account.class)))
     @PostMapping("/accounts")
     @Transactional
-    public ResponseEntity<AccountDto> createAccount(@RequestBody Account account){
-        validation(account);
-        existsAccountByNameCustomerAndNumberAccount(account);
-        return new ResponseEntity<AccountDto>(accountService.createAccount(account), HttpStatus.CREATED);
+    public ResponseEntity<AccountResponseDto> createAccount(@RequestBody AccountRequestDto accountRequestDto){
+        validation(accountRequestDto);
+        existsAccountByNameCustomerAndNumberAccount(accountRequestDto);
+        return new ResponseEntity<>(accountService.createAccount(accountRequestDto), HttpStatus.CREATED);
     }
 
     /**
@@ -87,13 +89,13 @@ public class AccountController {
         if (accountRequestDto.getNameCustomer() == null || accountRequestDto.getNameCustomer().isEmpty()) {
             throw new ValidationException("El nombre del cliente debe ser obligatorio");
         }
-        if (account.getNameCustomer().length() >= 30) {
+        if (accountRequestDto.getNameCustomer().length() >= 30) {
             throw new ValidationException("El nombre del cliente no debe exceder los 30 caracteres");
         }
-        if (account.getNumberAccount() == null || account.getNumberAccount().isEmpty()) {
+        if (accountRequestDto.getNumberAccount() == null || accountRequestDto.getNumberAccount().isEmpty()) {
             throw new ValidationException("El número de cuenta debe ser obligatorio");
         }
-        if (account.getNumberAccount().length() != 13) {
+        if (accountRequestDto.getNumberAccount().length() != 13) {
             throw new ValidationException("Number Account must have at least 5 characters");
         }
     }

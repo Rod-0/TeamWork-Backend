@@ -1,19 +1,19 @@
 package upc.edu.pe.AccountTransaction.service;
 
-import upc.edu.pe.AccountTransaction.dto.AccountDto;
-import upc.edu.pe.AccountTransaction.model.Account;
+import upc.edu.pe.AccountTransaction.dto.request.AccountRequestDto;
+import upc.edu.pe.AccountTransaction.dto.response.AccountResponseDto;
 
 import java.util.List;
 
 public interface AccountService {
 
     //CreateAccount
-    public abstract AccountDto createAccount(Account account);
+    public abstract AccountResponseDto createAccount(AccountRequestDto accountRequestDto);
 
-    public abstract AccountDto getAccountById(Long id);
+    public abstract AccountResponseDto getAccountById(Long id);
 
-    public abstract List<AccountDto> getAllAccounts();
+    public abstract List<AccountResponseDto> getAllAccounts();
 
-    public abstract AccountDto getAccountByNumberAndName(String accountNumber, String nameCustomer);
+    public abstract AccountResponseDto getAccountByNumberAndName(String accountNumber, String nameCustomer);
 
 }

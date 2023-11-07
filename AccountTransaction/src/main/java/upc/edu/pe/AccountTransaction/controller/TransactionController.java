@@ -11,9 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import upc.edu.pe.AccountTransaction.dto.AccountDto;
-import upc.edu.pe.AccountTransaction.dto.TransactionDto;
+import upc.edu.pe.AccountTransaction.dto.request.AccountRequestDto;
+import upc.edu.pe.AccountTransaction.dto.request.TransactionRequestDto;
+import upc.edu.pe.AccountTransaction.dto.response.TransactionResponseDto;
 import upc.edu.pe.AccountTransaction.exception.ValidationException;
-import upc.edu.pe.AccountTransaction.model.Account;
 import upc.edu.pe.AccountTransaction.model.Transaction;
 import upc.edu.pe.AccountTransaction.repository.TransactionRepository;
 import upc.edu.pe.AccountTransaction.service.AccountService;
@@ -67,16 +68,16 @@ public class TransactionController {
             schema = @Schema(implementation = Transaction.class)))
     @Transactional
     @PostMapping("/accounts/{id}/transactions")
-    public ResponseEntity<TransactionDto> createTransaction(@PathVariable(value = "id") Long accountId, @RequestBody Transaction transaction){
+    public ResponseEntity<TransactionResponseDto> createTransaction(@PathVariable(value = "id") Long accountId, @RequestBody TransactionRequestDto transactionRequestDto){
 
-        AccountDto accountDto = accountService.getAccountById(accountId);
-        validation(transaction);
+        var accountRequestDto = accountService.getAccountById(accountId);
+        validation(transactionRequestDto);
         existsAccountById(accountDto);
-        transactiontype(transaction);
-        transaction.setCreateDate(LocalDate.now());
+        transactiontype(transactionRequestDto);
+        transactionRequestDto.setCreateDate(LocalDate.now());
 
 
-        return new ResponseEntity<TransactionDto>(transactionService.createTransaction(transaction), HttpStatus.CREATED);
+        return new ResponseEntity<>(transactionService.createTransaction(transactionRequestDto), HttpStatus.CREATED);
     }
 
     /**
@@ -88,8 +89,9 @@ public class TransactionController {
     //Method: GET
     @Transactional(readOnly = true)
     @GetMapping("/transactions/filterByNameCustomer")
-    public ResponseEntity<List<TransactionDto>> getTransactionByNameCustomer(@RequestParam(name = "nameCustomer") String nameCustomer){
-        return new ResponseEntity<List<TransactionDto>>(transactionService.getTransactionByNameCustomer(nameCustomer), HttpStatus.OK);
+    public ResponseEntity<List<TransactionResponseDto>> getTransactionByNameCustomer(@RequestParam(name = "nameCustomer") String nameCustomer){
+        var res = transactionService.getTransactionByNameCustomer(nameCustomer);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     /**
@@ -102,8 +104,9 @@ public class TransactionController {
     //Method: GET
     @Transactional(readOnly = true)
     @GetMapping("/transactions/filterByCreateDateRange")
-    public ResponseEntity<List<TransactionDto>> getTransactionByCreateDateRange(@RequestParam(name = "startDate") String startDate, @RequestParam(name = "endDate") String endDate){
-        return new ResponseEntity<List<TransactionDto>>(transactionService.getTransactionByDateRange(startDate, endDate), HttpStatus.OK);
+    public ResponseEntity<List<TransactionResponseDto>> getTransactionByCreateDateRange(@RequestParam(name = "startDate") String startDate, @RequestParam(name = "endDate") String endDate){
+        var res = transactionService.getTransactionByDateRange(startDate, endDate);
+        return new ResponseEntity<>(transactionService.getTransactionByDateRange(startDate, endDate), HttpStatus.OK);
     }
 
     /**
