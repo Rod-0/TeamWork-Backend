@@ -5,15 +5,13 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import upc.edu.pe.AccountTransaction.dto.AccountDto;
 import upc.edu.pe.AccountTransaction.dto.request.AccountRequestDto;
 import upc.edu.pe.AccountTransaction.dto.response.AccountResponseDto;
-import upc.edu.pe.AccountTransaction.exception.ValidationException;
+import upc.edu.pe.AccountTransaction.shared.exception.ValidationException;
 import upc.edu.pe.AccountTransaction.model.Account;
 import upc.edu.pe.AccountTransaction.repository.AccountRepository;
 import upc.edu.pe.AccountTransaction.service.AccountService;
@@ -32,19 +30,20 @@ import java.util.List;
 public class AccountController {
 
     //Inyeccion de dependencias para el servicio de cuentas
-    @Autowired
-    private AccountService accountService;
+    private final AccountService accountService;
 
     //Inyeccion de dependencias para el repositorio de cuentas
     private final AccountRepository accountRepository;
+
 
     /**
      * Constructor de la clase
      * @param accountRepository El repositorio para operaciones relacionales con la entidad Account
      */
-    public AccountController(AccountRepository accountRepository){
-        this.accountRepository = accountRepository;
 
+    public AccountController(AccountService accountService, AccountRepository accountRepository) {
+        this.accountService = accountService;
+        this.accountRepository = accountRepository;
     }
 
     /**
@@ -108,8 +107,6 @@ public class AccountController {
         if (accountRepository.existsByNumberAccountAndNameCustomer(accountRequestDto.getNumberAccount(), accountRequestDto.getNameCustomer())) {
             throw new ValidationException("No se puede registrar la cuenta porque ya existe uno con estos datos");
         }
-
-
     }
 
 

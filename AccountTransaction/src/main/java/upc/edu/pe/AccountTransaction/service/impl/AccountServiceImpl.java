@@ -4,7 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import upc.edu.pe.AccountTransaction.dto.request.AccountRequestDto;
 import upc.edu.pe.AccountTransaction.dto.response.AccountResponseDto;
-import upc.edu.pe.AccountTransaction.exception.ResourceNotFoundException;
+import upc.edu.pe.AccountTransaction.shared.exception.ResourceNotFoundException;
 import upc.edu.pe.AccountTransaction.model.Account;
 import upc.edu.pe.AccountTransaction.repository.AccountRepository;
 import upc.edu.pe.AccountTransaction.service.AccountService;

@@ -5,16 +5,15 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import upc.edu.pe.AccountTransaction.dto.AccountDto;
 import upc.edu.pe.AccountTransaction.dto.request.AccountRequestDto;
 import upc.edu.pe.AccountTransaction.dto.request.TransactionRequestDto;
+import upc.edu.pe.AccountTransaction.dto.response.AccountResponseDto;
 import upc.edu.pe.AccountTransaction.dto.response.TransactionResponseDto;
-import upc.edu.pe.AccountTransaction.exception.ValidationException;
+import upc.edu.pe.AccountTransaction.shared.exception.ValidationException;
 import upc.edu.pe.AccountTransaction.model.Transaction;
 import upc.edu.pe.AccountTransaction.repository.TransactionRepository;
 import upc.edu.pe.AccountTransaction.service.AccountService;
@@ -69,10 +68,9 @@ public class TransactionController {
     @Transactional
     @PostMapping("/accounts/{id}/transactions")
     public ResponseEntity<TransactionResponseDto> createTransaction(@PathVariable(value = "id") Long accountId, @RequestBody TransactionRequestDto transactionRequestDto){
-
+        existsAccountById(transactionRequestDto.getAccount().getId());
         var accountRequestDto = accountService.getAccountById(accountId);
         validation(transactionRequestDto);
-        existsAccountById(accountDto);
         transactiontype(transactionRequestDto);
         transactionRequestDto.setCreateDate(LocalDate.now());
 
@@ -128,11 +126,11 @@ public class TransactionController {
 
     /**
      * Metodo que verifica si existe una cuenta por su id
-     * @param accountDto La cuenta a verificar
+     * @param account La cuenta a verificar
      * @throws ValidationException Si la cuenta no existe
      */
-    private void existsAccountById(AccountDto accountDto) {
-        if (accountService.getAccountById(accountDto.id()) == null) {
+    private void existsAccountById(Long account) {
+        if (accountService.getAccountById(account) == null){
             throw new ValidationException("No se puede registrar la transacción porque no existe la cuenta");
         }
     }

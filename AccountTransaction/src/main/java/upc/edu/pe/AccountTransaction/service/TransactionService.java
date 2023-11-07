@@ -1,9 +1,7 @@
 package upc.edu.pe.AccountTransaction.service;
 
-import upc.edu.pe.AccountTransaction.dto.TransactionDto;
 import upc.edu.pe.AccountTransaction.dto.request.TransactionRequestDto;
 import upc.edu.pe.AccountTransaction.dto.response.TransactionResponseDto;
-import upc.edu.pe.AccountTransaction.model.Transaction;
 
 import java.util.List;
 

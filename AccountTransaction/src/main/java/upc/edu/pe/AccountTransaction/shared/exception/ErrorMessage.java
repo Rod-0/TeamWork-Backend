@@ -1,4 +1,4 @@
-package upc.edu.pe.AccountTransaction.exception;
+package upc.edu.pe.AccountTransaction.shared.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

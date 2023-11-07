@@ -1,13 +1,11 @@
 package upc.edu.pe.AccountTransaction.service.impl;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import upc.edu.pe.AccountTransaction.dto.TransactionDto;
 import upc.edu.pe.AccountTransaction.dto.request.TransactionRequestDto;
 import upc.edu.pe.AccountTransaction.dto.response.TransactionResponseDto;
-import upc.edu.pe.AccountTransaction.exception.ResourceNotFoundException;
+import upc.edu.pe.AccountTransaction.shared.exception.ResourceNotFoundException;
 
 import upc.edu.pe.AccountTransaction.model.Transaction;
 
