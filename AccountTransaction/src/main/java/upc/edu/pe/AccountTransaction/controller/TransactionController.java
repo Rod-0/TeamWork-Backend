@@ -9,9 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import upc.edu.pe.AccountTransaction.dto.request.AccountRequestDto;
 import upc.edu.pe.AccountTransaction.dto.request.TransactionRequestDto;
-import upc.edu.pe.AccountTransaction.dto.response.AccountResponseDto;
 import upc.edu.pe.AccountTransaction.dto.response.TransactionResponseDto;
 import upc.edu.pe.AccountTransaction.shared.exception.ValidationException;
 import upc.edu.pe.AccountTransaction.model.Transaction;
@@ -85,6 +83,10 @@ public class TransactionController {
      */
     //URL: http://localhost:8080/api/bank/v1/transactions/filterByNameCustomer
     //Method: GET
+    @Operation(summary = "Get list of transactions by name customer")
+    @ApiResponse(responseCode = "200", description = "Operacion exitosa",
+            content = @Content(mediaType = "application/json",
+            schema = @Schema(implementation = Transaction.class)))
     @Transactional(readOnly = true)
     @GetMapping("/transactions/filterByNameCustomer")
     public ResponseEntity<List<TransactionResponseDto>> getTransactionByNameCustomer(@RequestParam(name = "nameCustomer") String nameCustomer){
@@ -100,6 +102,10 @@ public class TransactionController {
      */
     //URL: http://localhost:8080/api/bank/v1/transactions/filterByCreateDateRange
     //Method: GET
+    @Operation(summary = "Get list of transactions by date range")
+    @ApiResponse(responseCode = "200", description = "Operacion exitosa",
+            content = @Content(mediaType = "application/json",
+            schema = @Schema(implementation = Transaction.class)))
     @Transactional(readOnly = true)
     @GetMapping("/transactions/filterByCreateDateRange")
     public ResponseEntity<List<TransactionResponseDto>> getTransactionByCreateDateRange(@RequestParam(name = "startDate") String startDate, @RequestParam(name = "endDate") String endDate){

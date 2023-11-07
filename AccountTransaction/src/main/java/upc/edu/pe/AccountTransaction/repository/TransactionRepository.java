@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import upc.edu.pe.AccountTransaction.model.Transaction;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {

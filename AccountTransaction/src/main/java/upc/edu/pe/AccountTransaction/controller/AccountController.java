@@ -53,6 +53,10 @@ public class AccountController {
 
     //URL: http://localhost:8080/api/bank/v1/accounts
     //Method: GET
+    @Operation(summary = "Get a list of all accounts")
+    @ApiResponse(responseCode = "200", description = "Operacion exitosa",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Account.class)))
     @GetMapping("/accounts")
     @Transactional(readOnly = true)
     public ResponseEntity<List<AccountResponseDto>> getAllAccounts(){

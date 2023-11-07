@@ -1,9 +1,6 @@
 package upc.edu.pe.AccountTransaction.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import upc.edu.pe.AccountTransaction.model.Account;
 
 import java.time.LocalDate;
